@@ -7,22 +7,17 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const MyHomePage(title: 'Hello Flutter!'),
+      home: const MyHomePage(title: '04.Row/Colume Widget 실습'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
   final String title;
 
   @override
@@ -30,38 +25,120 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: Text(widget.title),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Row : 위젯을 가로로 배치하는 위젯
+            Row(
+              children: [
+                Container(
+                  width: 100,
+                  height: 100,
+                  color: Colors.red,
+                ),
+                Container(
+                  width: 100,
+                  height: 100,
+                  color: Colors.green,
+                ),
+                Container(
+                  width: 100,
+                  height: 100,
+                  color: Colors.blue,
+                ),
+              ],
+            ),
+
+            // Column : 위젯을 세로로 배치하는 위젯
+            Column(
+              children: [
+                Container(
+                  width: 100,
+                  height: 100,
+                  color: Colors.red,
+                ),
+                Container(
+                  width: 100,
+                  height: 100,
+                  color: Colors.green,
+                ),
+                Container(
+                  width: 100,
+                  height: 100,
+                  color: Colors.blue,
+                ),
+              ],
+            ),
+
+            Row(
+              children: [
+                Column(
+                  children: [
+                    Text('벗꽃'),
+                    Image.asset(
+                      'images/flower1.jpg',
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.fill,
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    Text('코스모스'),
+                    Image.asset(
+                      'images/flower2.jpg',
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.fill,
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    Text('해바라기'),
+                    Image.asset(
+                      'images/flower3.jpg',
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.fill,
+                    )
+                  ],
+                )
+              ],
+            ),
+
+            Container(
+              width: 400,
+              height: 200,
+              decoration: BoxDecoration(
+                  color: Colors.yellow,
+                  border: Border.all(width: 1)
+              ),
+              margin: EdgeInsets.symmetric(vertical: 10), // 위,아래 여백 10
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start, // 기본축 정렬(가로 정렬)
+                crossAxisAlignment: CrossAxisAlignment.end, // 교차축 정렬(세로 정렬)
+                children: [
+                  Container(width: 50, height: 100, color: Colors.red,),
+                  Container(width: 50, height: 50, color: Colors.green,),
+                  Container(width: 50, height: 150, color: Colors.blue,),
+                ],
+              ),
+            )
+
+          ],
+        )
+
     );
   }
 }
