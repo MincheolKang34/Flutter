@@ -40,8 +40,8 @@ class GridViewTest extends StatelessWidget {
                       Text(cities[index]),
                       Image.network(
                           // 'https://picsum.photos/id/237/',
-                        'https://static.wikia.nocookie.net/character-stats-and-profiles/images/c/c7/DZuvg1d.png/',
-                        fit: BoxFit.fill,
+                        'https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg',
+                        fit: BoxFit.contain,
                       )
                     ],
                   ),
