@@ -66,7 +66,7 @@ class _BottomTabBarTestState extends State<BottomTabBarTest> {
         appBar: AppBar(
           title: const Text('04.Bottom TabBar 실습'),
         ),
-        body: null,
+        body: _widgetList.elementAt(_selectedIndex),
 
         // 탭바를 아래에 위치
         bottomNavigationBar: BottomNavigationBar(
@@ -74,7 +74,14 @@ class _BottomTabBarTestState extends State<BottomTabBarTest> {
               BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
               BottomNavigationBarItem(icon: Icon(Icons.star), label: '즐겨찾기'),
               BottomNavigationBarItem(icon: Icon(Icons.person), label: '프로필'),
-            ]
+            ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.blue,
+          onTap: (index){
+              setState(() {
+                _selectedIndex = index;
+              });
+          },
         ),
       ),
     );
