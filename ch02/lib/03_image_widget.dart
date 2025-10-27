@@ -56,13 +56,15 @@ class _MyHomePageState extends State<MyHomePage> {
               'images/flower3.jpg',
               width: 200,
               height: 200,
-              fit: BoxFit.fill,
-              repeat: ImageRepeat.noRepeat,
+              fit: BoxFit.fill, // width, height에 맞춰 채워 넣기
+              repeat: ImageRepeat.noRepeat, // 부족할 경우 반복 여부 : BoxFit.contain에서 반복됨.
             ),
-            Image.network(
+            Image.network( // 인터넷에서 이미지 가져오기
               'https://picsum.photos/id/237/200/300',
               width: 100,
               height: 100,
+              fit: BoxFit.contain,
+              repeat: ImageRepeat.repeat,
             ),
             Image.network(
               'https://picsum.photos/id/238/200/300',

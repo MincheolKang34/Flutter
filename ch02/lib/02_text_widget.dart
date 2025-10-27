@@ -56,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
               overflow: TextOverflow.ellipsis,
             ),
 
-            // 문자열 문자 스타일
+            // 문자열 문자 스타일(문자 배열)
             Text.rich(
                 TextSpan(
                     text: 'HE',
