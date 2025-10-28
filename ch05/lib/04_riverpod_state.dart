@@ -31,7 +31,8 @@ final counterProvider = StateNotifierProvider<CounterNotifier, int>(
 final checkProvider = StateProvider((ref) => false);
 
 void main() {
-  runApp(ProviderScope( // revierpod 프로바이더를 사용하기 위해 ProviderScope 처리
+  // revierpod 프로바이더를 사용하기 위해 ProviderScope 처리
+  runApp(ProviderScope( // flutter_riverpod 3.x.x 부터 const 사용 안 함.
     child: MyApp()
   )
   );
