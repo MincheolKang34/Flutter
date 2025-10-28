@@ -1,7 +1,7 @@
 /*
   날짜 : 2045.10.28.
   이름 : 강민철
-  내용 : 6장 Flutter 네비게이션 Routes 실습
+  내용 : 6장 네비게이션 Routes 실습
  */
 
 import 'package:flutter/material.dart';
