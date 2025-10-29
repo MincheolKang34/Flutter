@@ -45,6 +45,11 @@ class _MyHomePageState extends State<MyHomePage> {
             /*
             이미지 에셋 등록 설정 ⭐⭐⭐
              - pubspec.yaml > flutter 하위에 assets 주석 제거후 이미지 경로 입력
+
+            예시)
+            assets:
+             - images/flower1.jpg
+             - images/
           */
             Image.asset('images/flower1.jpg'),
             Image.asset(

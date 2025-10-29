@@ -57,6 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
 
             // 문자열 문자 스타일(문자 배열)
+            // HTML의 SPAN과 유사
             Text.rich(
                 TextSpan(
                     text: 'HE',
