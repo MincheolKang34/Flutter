@@ -73,7 +73,7 @@ class _User1ModifyState extends State<User1Modify> {
       await _showDialog('수정 성공', '사용자가 성공적으로 수정되었습니다.');
       log('submitForm...4');
 
-      // async 이후 context 안전하게 사용하기 위한 처리, _User1RegisterState 객체가 위젯 트리에 없으면 함수 종료
+      // async 이후 context 안전하게 사용하기 위한 처리, _User1ModifyState 객체가 위젯 트리에 없으면 함수 종료
       // mounted는 현재 State 객체가 위젯 트리에 “붙어 있는지(mounted)” 여부를 나타내는 읽기 전용 불리언 변수
       if(!mounted) return;
 
