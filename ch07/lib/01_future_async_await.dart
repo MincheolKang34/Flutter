@@ -44,6 +44,7 @@ class _FutureScreenState extends State<FutureScreen> {
       result = '로딩 중...1';
     });
 
+    // fetchData는 3초 대기. 그 외(로딩중 1,2)는 바로 실행
     fetchData().then((data){
           setState(() {
             result = data;
@@ -86,7 +87,7 @@ class _FutureScreenState extends State<FutureScreen> {
   }
 
   void handleCount() async {
-    int result = await startCounting();
+    int result = await startCounting(); // 해당 함수가 완수될 때까지 다음 함수를 실행하지 않음.
 
     setState(() {
       count = result + 1;
