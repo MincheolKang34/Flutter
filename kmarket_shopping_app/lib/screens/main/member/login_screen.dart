@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:kmarket_shopping/screens/main/member/terms_screen.dart';
+import 'package:kmarket_shopping/services/member_service.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -7,6 +10,42 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _idController = TextEditingController();
+  final _pwController = TextEditingController();
+
+  final service = MemberService();
+
+  Future<void> _procLogin() async {
+    final usid = _idController.text;
+    final pass = _pwController.text;
+
+    if(usid.isEmpty || pass.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('아이디, 비밀번호를 입력하세요.'))
+      );
+      return;
+    }
+    
+    // 서비스 호출
+    try {
+      Map<String, dynamic> jsonData = await service.login(usid, pass);
+
+      String? accessToken = jsonData['accessToken'];
+      log('accessToken : $accessToken');
+
+      if(accessToken != null) {
+        // 토큰 저장(SharedPreference or SecurePreference)
+
+      }
+    } catch(err) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('에러 발생 : $err'))
+      );
+    }
+    
+  }
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,13 +60,16 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 20,),
               const Text('쇼핑몰 로그인', style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),),
               const SizedBox(height: 20,),
-              TextField(decoration: InputDecoration(
+              TextField(
+                  controller: _idController,
+                  decoration: InputDecoration(
                   labelText: '아이디 입력',
                   border: OutlineInputBorder()
                 ),
               ),
               const SizedBox(height: 20,),
               TextField(
+                controller: _pwController,
                 obscureText: true,
                 decoration: InputDecoration(
                   labelText: '비밀번호 입력',
@@ -39,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
-                    onPressed: (){},
+                    onPressed: _procLogin,
                     child: const Text('로그인', style: TextStyle(fontSize: 20, color: Colors.black),)
                 ),
               ),
