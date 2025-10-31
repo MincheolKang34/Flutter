@@ -23,8 +23,8 @@ class _MainTabScreenState extends State<MainTabScreen>{
   }
 
   // 5개 탭 화면 리스트
-  static const List<Widget> _widgetList = [
-    HomeTab(),
+  late final List<Widget> _widgetList = [
+    HomeTab(onTabSwitch: _onTabHandler,),
     CategoryTab(),
     SearchTab(),
     MyTab(),

@@ -2,7 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:kmarket_shopping/screens/main/member/terms_screen.dart';
+import 'package:kmarket_shopping/screens/providers/auth_provider.dart';
 import 'package:kmarket_shopping/services/member_service.dart';
+import 'package:kmarket_shopping/services/token_storage_service.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -14,6 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _pwController = TextEditingController();
 
   final service = MemberService();
+  final tokenStorageService = TokenStorageService();
 
   Future<void> _procLogin() async {
     final usid = _idController.text;
@@ -34,8 +38,11 @@ class _LoginScreenState extends State<LoginScreen> {
       log('accessToken : $accessToken');
 
       if(accessToken != null) {
-        // 토큰 저장(SharedPreference or SecurePreference)
+        // 토큰 저장(Provider)
+        context.read<AuthProvider>().login(accessToken);
 
+        // 로그인 화면 닫기
+        Navigator.of(context).pop();
       }
     } catch(err) {
       ScaffoldMessenger.of(context).showSnackBar(
