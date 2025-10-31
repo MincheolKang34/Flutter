@@ -35,7 +35,7 @@ class _MyTabState extends State<MyTab> {
 
   // 로그인 후 사용자 정보 화면 디자인 함수
   Widget _buildLoggedIn() {
-    return SingleChildScrollView(
+    return SingleChildScrollView( // 자식 위젯이 화면 크기를 초과할 경우 스크롤 가능한 위젯
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
