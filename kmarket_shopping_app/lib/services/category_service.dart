@@ -26,7 +26,7 @@ class CategoryService {
       Category(id: 'C04', name: '뷰티', subCategories: [
         CategorySub(id: 40, name: '화장품'),
         CategorySub(id: 41, name: '향수'),
-        CategorySub(id: 42, name: '화장품'),
+        CategorySub(id: 42, name: '스킨케어'),
       ]),
     ];
   }
