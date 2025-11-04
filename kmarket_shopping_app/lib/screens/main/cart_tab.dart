@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:kmarket_shopping/models/cart.dart';
 import 'package:kmarket_shopping/screens/main/member/login_screen.dart';
 import 'package:kmarket_shopping/screens/providers/auth_provider.dart';
+import 'package:kmarket_shopping/services/cart_service.dart';
 import 'package:provider/provider.dart';
 
 class CartTab extends StatefulWidget {
@@ -11,7 +13,27 @@ class CartTab extends StatefulWidget {
 }
 
 class _CartTabState extends State<CartTab> {
-  Widget _buildLogin() {
+
+  late Future<List<Cart>> _futureListCart;
+
+  final cartService = CartService();
+
+  @override
+  void initState() {
+    super.initState();
+    _futureListCart = _loadCartList();
+  }
+
+  Future<List<Cart>> _loadCartList() async {
+    final jsonData = await cartService.getCarts();
+
+    return jsonData
+        .map((json) => Cart.fromJson(json))
+        .toList();
+  }
+
+  // 로그인 안 했을 때 화면
+  Widget _buildLoginRequired() {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -32,28 +54,42 @@ class _CartTabState extends State<CartTab> {
     );
   }
 
-  Widget _buildLoggedIn() {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-          ],
-        ),
-      ),
+  // 로그인 했을 때 화면
+  Widget _buildCartList() {
+    return FutureBuilder<List<Cart>>(
+        future: _futureListCart,
+        builder: (context, snapshot) {
+
+          final listCart = snapshot.data ?? [];
+
+          return ListView.builder(
+            itemCount: listCart.length,
+            itemBuilder: (context, index) {
+
+              final cart = listCart[index];
+
+              return Card(
+                child: Text('cart : ${cart.cartId}'),
+              );
+            }
+          );
+        }
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    // AuthProvider 구독
-    final authProvider = Provider.of<AuthProvider>(context);
-    bool isLoggedIn = authProvider.isLoggedIn;
+    // 아래 Consumer 위젯으로 처리
+    // final authProvider = Provider.of<AuthProvider>(context);
+    // bool isLoggedIn = authProvider.isLoggedIn;
 
     return Scaffold(
         appBar: AppBar(title: const Text('장바구니'),),
-        body: isLoggedIn ? _buildLoggedIn() : _buildLogin()
+        body: Consumer<AuthProvider>(
+            builder: (context, provider, child) {
+              return provider.isLoggedIn ? _buildCartList() : _buildLoginRequired();
+            }
+        )
     );
   }
 }

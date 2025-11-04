@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:kmarket_shopping/models/cart.dart';
 import 'package:kmarket_shopping/models/product.dart';
 import 'package:kmarket_shopping/screens/config/app_config.dart';
+import 'package:kmarket_shopping/screens/main/member/login_screen.dart';
+import 'package:kmarket_shopping/screens/providers/auth_provider.dart';
 import 'package:kmarket_shopping/services/cart_service.dart';
+import 'package:provider/provider.dart';
 
 class ProductViewScreen extends StatefulWidget {
   final Product product;
@@ -29,10 +32,28 @@ class _ProductViewScreenState extends State<ProductViewScreen> {
     log('savedCart : $jsonData');
     // Cart savedCart = Cart.fromJson(jsonData);
 
+    if(jsonData.isNotEmpty) {
+      showDialog(
+          context: context, 
+          builder: (context) => AlertDialog(
+            title: const Text('장바구니 등록 성공!'),
+            content: const Text('상품이 장바구니에 담겼습니다.'),
+            actions: [
+              TextButton(
+                  onPressed: () => Navigator.pop(context), 
+                  child: const Text('확인')
+              )
+            ],
+          )
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
+    final isLoggedIn = authProvider.isLoggedIn; // 로그인 상태 가져오기
+
     // ProductViewScreen 속성 product 참조
     final product = widget.product;
 
@@ -110,7 +131,37 @@ class _ProductViewScreenState extends State<ProductViewScreen> {
               children: [
                 Expanded(
                   child: ElevatedButton.icon(
-                    onPressed: _addCart,
+                    onPressed: () {
+                      if (isLoggedIn) {
+                        _addCart();
+                      } else {
+                        showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: const Text('로그인이 필요합니다.'),
+                              content: const Text('장바구니에 상품을 담으려면 로그인이 필요합니다. 로그인 화면으로 이동하시겠습니까?'),
+                              actions: [
+                                TextButton(
+                                    onPressed: () => Navigator.pop(context), // 닫기
+                                    child: const Text('취소')
+                                ),
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context); // 닫기
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => LoginScreen()
+                                          )
+                                      );
+                                    },
+                                  child: const Text('로그인으로 이동')
+                                ),
+                              ],
+                            )
+                        );
+                      }
+                    },
                     label: const Text('장바구니'),
                     icon: Icon(Icons.shopping_cart),
                   )
